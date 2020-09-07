@@ -34,6 +34,7 @@ MakeSample_attribute_prediction_exist_PTS_OutputDir = ROOT_PATH + "/data/learnin
 MakeSample_attribute_prediction_exist_Age_OutputDir = ROOT_PATH + "/data/learning_data/attribute_prediction_exist_Age"
 MakeSample_attribute_prediction_exist_Tm_OutputDir = ROOT_PATH + "/data/learning_data/attribute_prediction_exist_Tm"
 MakeSample_attribute_prediction_exist_Pos_OutputDir = ROOT_PATH + "/data/learning_data/attribute_prediction_exist_Pos"
+MakeSample_attribute_prediction_exist_Tm_binary_OutputDir = ROOT_PATH + "/data/learning_data/attribute_prediction_exist_Tm_binary"
 # attribute_prediction_new
 MakeSample_attribute_prediction_new_InputDir = ROOT_PATH + "/data/graph"
 MakeSample_attribute_prediction_new_OutputDir = ROOT_PATH + "/data/learning_data/attribute_prediction_new"
@@ -109,6 +110,12 @@ Model_attribute_prediction_exist_Pos_InputDir = MakeSample_attribute_prediction_
 Model_attribute_prediction_exist_Pos_Baseline_OutputDir = ROOT_PATH + "/data/learning_result/attribute_prediction_exist_Pos/Baseline"
 Model_attribute_prediction_exist_Pos_LSTM_OutputDir = ROOT_PATH + "/data/learning_result/attribute_prediction_exist_Pos/LSTM"
 Model_attribute_prediction_exist_Pos_STGGNN_OutputDir = ROOT_PATH + "/data/learning_result/attribute_prediction_exist_Pos/STGGNN"
+
+Model_attribute_prediction_exist_Tm_binary_InputDir = MakeSample_attribute_prediction_exist_Tm_binary_OutputDir
+Model_attribute_prediction_exist_Tm_binary_Baseline_OutputDir = ROOT_PATH + "/data/learning_result/attribute_prediction_exist_Tm_binary/Baseline"
+Model_attribute_prediction_exist_Tm_binary_LSTM_OutputDir = ROOT_PATH + "/data/learning_result/attribute_prediction_exist_Tm_binary/LSTM"
+Model_attribute_prediction_exist_Tm_binary_STGGNN_OutputDir = ROOT_PATH + "/data/learning_result/attribute_prediction_exist_Tm_binary/STGGNN"
+
 
 # attribute_prediction_new
 Model_attribute_prediction_new_InputDir = MakeSample_attribute_prediction_new_OutputDir
@@ -207,6 +214,11 @@ Evaluation_attribute_prediction_exist_Pos_Baseline_InputDir = Model_attribute_pr
 Evaluation_attribute_prediction_exist_Pos_LSTM_InputDir = Model_attribute_prediction_exist_Pos_LSTM_OutputDir
 Evaluation_attribute_prediction_exist_Pos_STGGNN_InputDir = Model_attribute_prediction_exist_Pos_STGGNN_OutputDir
 Evaluation_attribute_prediction_exist_Pos_OutputDir = ROOT_PATH + "/data/result/attribute_prediction_exist_Pos"
+
+Evaluation_attribute_prediction_exist_Tm_binary_Baseline_InputDir = Model_attribute_prediction_exist_Tm_binary_Baseline_OutputDir
+Evaluation_attribute_prediction_exist_Tm_binary_LSTM_InputDir = Model_attribute_prediction_exist_Tm_binary_LSTM_OutputDir
+Evaluation_attribute_prediction_exist_Tm_binary_STGGNN_InputDir = Model_attribute_prediction_exist_Tm_binary_STGGNN_OutputDir
+Evaluation_attribute_prediction_exist_Tm_binary_OutputDir = ROOT_PATH + "/data/result/attribute_prediction_exist_Tm_binary"
 
 # attribute_prediction_new
 Evaluation_attribute_prediction_new_Baseline_InputDir = Model_attribute_prediction_new_Baseline_OutputDir
@@ -360,6 +372,19 @@ attribute_prediction_exist_PTS_lr = 0.01
 attribute_prediction_exist_PTS_mean = 558.397908887229
 attribute_prediction_exist_PTS_std = 510.751814658408
 attribute_prediction_exist_PTS_idx = [34]
+
+# attribute_prediction_exist_Tm_binary
+attribute_prediction_exist_Tm_binary_worker = 2
+attribute_prediction_exist_Tm_binary_batchSize = 2
+attribute_prediction_exist_Tm_binary_state_dim = attribute_dim
+attribute_prediction_exist_Tm_binary_annotation_dim = attribute_dim
+attribute_prediction_exist_Tm_binary_output_dim = 1
+attribute_prediction_exist_Tm_binary_init_L = L
+attribute_prediction_exist_Tm_binary_niter = 100
+attribute_prediction_exist_Tm_binary_n_steps = 5
+attribute_prediction_exist_Tm_binary_patience = 10
+attribute_prediction_exist_Tm_binary_lr = 0.01
+attribute_prediction_exist_Tm_binary_ID = 0
 
 # attribute_prediction_new
 attribute_prediction_new_worker = 2
