@@ -45,7 +45,6 @@ MakeSample_link_prediction_new_Baseline_OutputDir = ROOT_PATH + "/data/learning_
 MakeSample_link_prediction_new_DeepMatchMax_OutputDir = ROOT_PATH + "/data/learning_data/link_prediction_new/DeepMatchMax"
 MakeSample_link_prediction_new_FNN_OutputDir = ROOT_PATH + "/data/learning_data/link_prediction_new/FNN"
 
-
 # Model IO dir
 # prediction_num_of_edge
 # Baseline
@@ -244,6 +243,14 @@ Evaluation_link_prediction_new_OutputDir = ROOT_PATH + "/data/result/link_predic
 # graph_prediction
 Evaluation_graph_prediction_OutputDir = ROOT_PATH + "/data/result/graph_prediction"
 
+# repeat0_attribute_prediction_exist_Tm_binary_link_prediction_disappeared
+MakeSample_repeat0_attribute_prediction_exist_Tm_binary_link_prediction_disappeared_InputDir = Model_attribute_prediction_exist_Tm_binary_STGGNN_OutputDir + "/output"
+MakeSample_repeat0_attribute_prediction_exist_Tm_binary_link_prediction_disappeared_OutputDir = ROOT_PATH + "/data/learning_data/repeat0_attribute_prediction_exist_Tm_binary_link_prediction_disappeared"
+Model_repeat0_attribute_prediction_exist_Tm_binary_link_prediction_disappeared_InputDir = MakeSample_repeat0_attribute_prediction_exist_Tm_binary_link_prediction_disappeared_OutputDir
+Model_repeat0_attribute_prediction_exist_Tm_binary_link_prediction_disappeared_COSSIMMLP_OutputDir = ROOT_PATH + "/data/learning_result/repeat0_attribute_prediction_exist_Tm_binary_link_prediction_disappeared/COSSIMMLP"
+Evaluation_repeat0_attribute_prediction_exist_Tm_binary_link_prediction_disappeared_COSSIMMLP_InputDir = Model_repeat0_attribute_prediction_exist_Tm_binary_link_prediction_disappeared_COSSIMMLP_OutputDir
+Evaluation_repeat0_attribute_prediction_exist_Tm_binary_link_prediction_disappeared_OutputDir = ROOT_PATH + "/data/result/repeat0_attribute_prediction_exist_Tm_binary_link_prediction_disappeared"
+
 ######################################################################################################################
 # モデルハイパラメータの定義
 
@@ -412,3 +419,15 @@ link_prediction_new_niter = 1
 link_prediction_new_n_steps = 5
 link_prediction_new_patience = 3
 link_prediction_new_lr = 0.01
+
+# repeat0_attribute_prediction_exist_Tm_binary_link_prediction_disappeared
+repeat0_attribute_prediction_exist_Tm_binary_link_prediction_disappeared_worker = 2
+repeat0_attribute_prediction_exist_Tm_binary_link_prediction_disappeared_batchSize = 2
+repeat0_attribute_prediction_exist_Tm_binary_link_prediction_disappeared_state_dim = 1
+repeat0_attribute_prediction_exist_Tm_binary_link_prediction_disappeared_annotation_dim = 1
+repeat0_attribute_prediction_exist_Tm_binary_link_prediction_disappeared_output_dim = all_node_num
+repeat0_attribute_prediction_exist_Tm_binary_link_prediction_disappeared_init_L = L
+repeat0_attribute_prediction_exist_Tm_binary_link_prediction_disappeared_niter = 100
+repeat0_attribute_prediction_exist_Tm_binary_link_prediction_disappeared_n_steps = 5
+repeat0_attribute_prediction_exist_Tm_binary_link_prediction_disappeared_patience = 5
+repeat0_attribute_prediction_exist_Tm_binary_link_prediction_disappeared_lr = 0.01
