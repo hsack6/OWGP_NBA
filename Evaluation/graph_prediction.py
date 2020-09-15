@@ -7,6 +7,7 @@ import glob
 import re
 import os
 import sys
+from collections import defaultdict
 sns.set(style='darkgrid')
 sns.set_style(style='whitegrid')
 
@@ -368,7 +369,7 @@ def link_prediction(n_appeared, p_appeared, n_disappeared, p_disappeared, n_new,
     lost_edge_pred_set_list, lost_edge_true_set_list, recall_lost_edge, precision_lost_edge, f1_score_lost_edge = get_edge_connected_lost_node(probability_lost_InputDir, lost_node_pred_set_list, lost_node_true_set_list)
 
     # appeared_edge_set_predからlost nodeを含むedgeを削除
-    ts_edge_dic = {}
+    ts_edge_dic = defaultdict(list)
     for i in range(len(appeared_edge_pred_set_list)):
         appeared_edge_pred_set = appeared_edge_pred_set_list[i]
         appeared_edge_true_set = appeared_edge_true_set_list[i]
@@ -380,12 +381,33 @@ def link_prediction(n_appeared, p_appeared, n_disappeared, p_disappeared, n_new,
         for edge in appeared_edge_pred_set:
             for node in lost_node_pred_set:
                 if node in edge:
-                    ts_edge_dic[i] = edge
-    for i, edge in ts_edge_dic.items():
-        appeared_edge_pred_set_list[i].remove(edge)
+                    ts_edge_dic[i].append(edge)
+    for i, edge_list in ts_edge_dic.items():
+        for edge in edge_list:
+            if edge in appeared_edge_pred_set_list[i]:
+                appeared_edge_pred_set_list[i].remove(edge)
+
+    # disappeared_edge_set_predからlost nodeを含むedgeを削除
+    ts_edge_dic = defaultdict(list)
+    for i in range(len(disappeared_edge_pred_set_list)):
+        disappeared_edge_pred_set = disappeared_edge_pred_set_list[i]
+        disappeared_edge_true_set = disappeared_edge_true_set_list[i]
+        lost_node_pred_set = lost_node_pred_set_list[i]
+        lost_node_true_set = lost_node_true_set_list[i]
+        for edge in disappeared_edge_true_set:
+            for node in lost_node_true_set:
+                assert node not in edge, "trueにおいてはdisappeared_edge_set内にlost nodeが含まれることはない"
+        for edge in disappeared_edge_pred_set:
+            for node in lost_node_pred_set:
+                if node in edge:
+                    ts_edge_dic[i].append(edge)
+    for i, edge_list in ts_edge_dic.items():
+        for edge in edge_list:
+            if edge in disappeared_edge_pred_set_list[i]:
+                disappeared_edge_pred_set_list[i].remove(edge)
 
     # new_edge_set_predからlost nodeを含むedgeを削除
-    ts_edge_dic = {}
+    ts_edge_dic = defaultdict(list)
     for i in range(len(new_edge_pred_set_list)):
         new_edge_pred_set = new_edge_pred_set_list[i]
         new_edge_true_set = new_edge_true_set_list[i]
@@ -397,9 +419,11 @@ def link_prediction(n_appeared, p_appeared, n_disappeared, p_disappeared, n_new,
         for edge in new_edge_pred_set:
             for node in lost_node_pred_set:
                 if node in edge:
-                    ts_edge_dic[i] = edge
-    for i, edge in ts_edge_dic.items():
-        new_edge_pred_set_list[i].remove(edge)
+                    ts_edge_dic[i].append(edge)
+    for i, edge_list in ts_edge_dic.items():
+        for edge in edge_list:
+            if edge in new_edge_pred_set_list[i]:
+                new_edge_pred_set_list[i].remove(edge)
 
     # 総合結果を計算
     # 「tのlink集合 」 + 「appeared (link) 集合」+ 「new (link) 集合」- 「disappeared (link) 集合」- 「lost (link) 集合」
@@ -437,6 +461,7 @@ def link_prediction(n_appeared, p_appeared, n_disappeared, p_disappeared, n_new,
 
         true_set = (((t_edge_set | appeared_edge_true_set) | new_edge_true_set) - disappeared_edge_true_set) - lost_edge_true_set
         pred_set = [set() for _ in range(16)]
+
 
         # appeared : disappeared : new : lost
         # 何もしない場合 0000
@@ -503,4 +528,4 @@ def link_prediction(n_appeared, p_appeared, n_disappeared, p_disappeared, n_new,
 
 
 # link_prediction(n_appeared, p_appeared, n_disappeared, p_disappeared,  n_new,                    p_new, n_lost,  p_lost)
-link_prediction(      "LSTM",   "STGGNN",        "LSTM",      "STGGNN", "LSTM", "COSSIMMLP_Baseline_mix", "LSTM", "STGGNN")
+link_prediction(      "LSTM",   "STGGNN",        "LSTM",      "repeat0", "LSTM", "COSSIMMLP_Baseline_mix", "LSTM", "STGGNN")

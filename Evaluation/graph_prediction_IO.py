@@ -35,6 +35,8 @@ def get_disappeared_InputDirs(p_disappeared, n_disappeared):
     from setting_param import Evaluation_link_prediction_disappeared_Random_InputDir as disappeared_Random_InputDir
     from setting_param import Evaluation_link_prediction_disappeared_COSSIMMLP_InputDir as disappeared_COSSIMMLP_InputDir
     from setting_param import Evaluation_link_prediction_disappeared_STGGNN_InputDir as disappeared_STGGNN_InputDir
+    from setting_param import Evaluation_repeat0_attribute_prediction_exist_Tm_binary_link_prediction_disappeared_COSSIMMLP_InputDir as disappeared_repeat0_InputDir
+
     if p_disappeared == 'Baseline':
         probability_disappeared_InputDir = disappeared_Baseline_InputDir
     elif p_disappeared == 'Random':
@@ -43,6 +45,8 @@ def get_disappeared_InputDirs(p_disappeared, n_disappeared):
         probability_disappeared_InputDir = disappeared_COSSIMMLP_InputDir
     elif p_disappeared == 'STGGNN':
         probability_disappeared_InputDir = disappeared_STGGNN_InputDir
+    elif p_disappeared == 'repeat0':
+        probability_disappeared_InputDir = disappeared_repeat0_InputDir
 
     from setting_param import \
         Evaluation_prediction_num_of_edge_disappeared_LSTM_InputDir as num_disappeared_LSTM_InputDir

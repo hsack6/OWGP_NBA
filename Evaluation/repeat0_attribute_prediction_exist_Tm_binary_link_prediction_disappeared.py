@@ -18,7 +18,6 @@ sys.path.append( str(current_dir) + '/../' )
 from setting_param import ratio_test
 from setting_param import ratio_valid
 from setting_param import MakeSample_link_prediction_disappeared_InputDir
-from setting_param import MakeSample_repeat0_attribute_prediction_exist_Tm_binary_link_prediction_disappeared_InputDir
 
 EXIST_TABLE = np.load(MakeSample_link_prediction_disappeared_InputDir + '/exist_table.npy')
 
