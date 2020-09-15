@@ -353,6 +353,19 @@ def get_component_result(component_type, probability_InputDir, num_InputDir, nod
     return pred_set_list, true_set_list, recall, precision, f1_score
 
 
+def delete_lost_node(pred_set, lost_node_set):
+    edge_list = []
+    for edge in pred_set:
+        e0 = list(edge)[0]
+        e1 = list(edge)[1]
+        if e0 in lost_node_set or e1 in lost_node_set:
+            edge_list.append(edge)
+    for edge in edge_list:
+        if edge in pred_set:
+            pred_set.remove(edge)
+    return pred_set
+
+
 def link_prediction(n_appeared, p_appeared, n_disappeared, p_disappeared, n_new, p_new, n_lost, p_lost):
 
     probability_appeared_InputDir, num_appeared_InputDir = get_appeared_InputDirs(p_appeared, n_appeared)
@@ -367,63 +380,6 @@ def link_prediction(n_appeared, p_appeared, n_disappeared, p_disappeared, n_new,
     probability_lost_InputDir, num_lost_InputDir = get_lost_InputDirs(p_lost, n_lost)
     lost_node_pred_set_list, lost_node_true_set_list, recall_lost_node, precision_lost_node, f1_score_lost_node = get_component_result("node", probability_lost_InputDir, num_lost_InputDir, all_node_num)
     lost_edge_pred_set_list, lost_edge_true_set_list, recall_lost_edge, precision_lost_edge, f1_score_lost_edge = get_edge_connected_lost_node(probability_lost_InputDir, lost_node_pred_set_list, lost_node_true_set_list)
-
-    # appeared_edge_set_predからlost nodeを含むedgeを削除
-    ts_edge_dic = defaultdict(list)
-    for i in range(len(appeared_edge_pred_set_list)):
-        appeared_edge_pred_set = appeared_edge_pred_set_list[i]
-        appeared_edge_true_set = appeared_edge_true_set_list[i]
-        lost_node_pred_set = lost_node_pred_set_list[i]
-        lost_node_true_set = lost_node_true_set_list[i]
-        for edge in appeared_edge_true_set:
-            for node in lost_node_true_set:
-                assert node not in edge, "trueにおいてはappeared_edge_set内にlost nodeが含まれることはない"
-        for edge in appeared_edge_pred_set:
-            for node in lost_node_pred_set:
-                if node in edge:
-                    ts_edge_dic[i].append(edge)
-    for i, edge_list in ts_edge_dic.items():
-        for edge in edge_list:
-            if edge in appeared_edge_pred_set_list[i]:
-                appeared_edge_pred_set_list[i].remove(edge)
-
-    # disappeared_edge_set_predからlost nodeを含むedgeを削除
-    ts_edge_dic = defaultdict(list)
-    for i in range(len(disappeared_edge_pred_set_list)):
-        disappeared_edge_pred_set = disappeared_edge_pred_set_list[i]
-        disappeared_edge_true_set = disappeared_edge_true_set_list[i]
-        lost_node_pred_set = lost_node_pred_set_list[i]
-        lost_node_true_set = lost_node_true_set_list[i]
-        for edge in disappeared_edge_true_set:
-            for node in lost_node_true_set:
-                assert node not in edge, "trueにおいてはdisappeared_edge_set内にlost nodeが含まれることはない"
-        for edge in disappeared_edge_pred_set:
-            for node in lost_node_pred_set:
-                if node in edge:
-                    ts_edge_dic[i].append(edge)
-    for i, edge_list in ts_edge_dic.items():
-        for edge in edge_list:
-            if edge in disappeared_edge_pred_set_list[i]:
-                disappeared_edge_pred_set_list[i].remove(edge)
-
-    # new_edge_set_predからlost nodeを含むedgeを削除
-    ts_edge_dic = defaultdict(list)
-    for i in range(len(new_edge_pred_set_list)):
-        new_edge_pred_set = new_edge_pred_set_list[i]
-        new_edge_true_set = new_edge_true_set_list[i]
-        lost_node_pred_set = lost_node_pred_set_list[i]
-        lost_node_true_set = lost_node_true_set_list[i]
-        for edge in new_edge_true_set:
-            for node in lost_node_true_set:
-                assert node not in edge, "trueにおいてはnew_edge_set内にlost nodeが含まれることはない"
-        for edge in new_edge_pred_set:
-            for node in lost_node_pred_set:
-                if node in edge:
-                    ts_edge_dic[i].append(edge)
-    for i, edge_list in ts_edge_dic.items():
-        for edge in edge_list:
-            if edge in new_edge_pred_set_list[i]:
-                new_edge_pred_set_list[i].remove(edge)
 
     # 総合結果を計算
     # 「tのlink集合 」 + 「appeared (link) 集合」+ 「new (link) 集合」- 「disappeared (link) 集合」- 「lost (link) 集合」
@@ -454,6 +410,8 @@ def link_prediction(n_appeared, p_appeared, n_disappeared, p_disappeared, n_new,
         assert len(t_edge_set & new_edge_true_set) == 0, "tのlink集合とnew(link)集合は被らない"
         assert len(t_edge_set & new_edge_pred_set) == 0, "tのlink集合とnew(link)集合は被らない"
 
+        lost_node_pred_set = lost_node_pred_set_list[i]
+        lost_node_true_set = lost_node_true_set_list[i]
         lost_edge_pred_set = lost_edge_pred_set_list[i]
         lost_edge_true_set = lost_edge_true_set_list[i]
         assert len(t_edge_set & lost_edge_true_set) == len(lost_edge_true_set), "tのlink集合とlost(link)集合は被るべき"
@@ -462,40 +420,56 @@ def link_prediction(n_appeared, p_appeared, n_disappeared, p_disappeared, n_new,
         true_set = (((t_edge_set | appeared_edge_true_set) | new_edge_true_set) - disappeared_edge_true_set) - lost_edge_true_set
         pred_set = [set() for _ in range(16)]
 
-
         # appeared : disappeared : new : lost
         # 何もしない場合 0000
         pred_set[0] = t_edge_set
         # lostのみをbest methodにした時 0001
         pred_set[1] = t_edge_set - lost_edge_pred_set
+        pred_set[1] = delete_lost_node(pred_set[1], lost_node_pred_set)
         # newのみをbest methodにした時 0010
         pred_set[2] = t_edge_set | new_edge_pred_set
         # lostとnewのみをbest methodにした時 0011
         pred_set[3] = (t_edge_set | new_edge_pred_set) - lost_edge_pred_set
+        pred_set[3] = delete_lost_node(pred_set[3], lost_node_pred_set)
         # disappearedのみをbest methodにした時 0100
         pred_set[4] = t_edge_set - disappeared_edge_pred_set
+
+        # disappearedのみの結果だとrepeat0の方が良いが総合結果ではrepeat0が負けてしまう
+        # 原因 : repeat0以外メソッドのdisappeared予測にはlostで予測しきれなかった真のlost edgeが多目に含まれていると考えられる → disappeared 単体予測だとlost nodeの特徴も同時に捉えているっぽい。
+        # test_set = t_edge_set - disappeared_edge_true_set
+        # print(len(t_edge_set), len(disappeared_edge_pred_set), len(disappeared_edge_true_set), len(disappeared_edge_true_set & disappeared_edge_pred_set), len(pred_set[4]&true_set), len(pred_set[4]&test_set))
+        # print(len(disappeared_edge_pred_set & lost_edge_true_set)) → 実際にSTGGNNの方がrepeat0より10倍ほど多い
+        # repeat0の学習にlost nodeの確率も追加すれば良いのでは？ (→ repeat1)
+        # ぶっちゃけ予測結果の確率だけでなくてgivenな属性も加えた方が良い気がする。
+
         # disappearedとlostをbest methodにした時 0101
         pred_set[5] = (t_edge_set - disappeared_edge_pred_set) - lost_edge_pred_set
+        pred_set[5] = delete_lost_node(pred_set[5], lost_node_pred_set)
         # disappearedとnewをbest methodにした時 0110
         pred_set[6] = (t_edge_set | new_edge_pred_set) - disappeared_edge_pred_set
         # disappearedとnewとlostをbest methodにした時 0111
         pred_set[7] = ((t_edge_set | new_edge_pred_set) - disappeared_edge_pred_set) - lost_edge_pred_set
+        pred_set[7] = delete_lost_node(pred_set[7], lost_node_pred_set)
         # appearedのみをbest methodにした時 1000
         pred_set[8] = t_edge_set | appeared_edge_pred_set
         # appearedとlostをbest methodにした時 1001
         pred_set[9] = (t_edge_set | appeared_edge_pred_set) - lost_edge_pred_set
+        pred_set[9] = delete_lost_node(pred_set[9], lost_node_pred_set)
         # appearedとnewをbest methodにした時 1010
         pred_set[10] = (t_edge_set | appeared_edge_pred_set) | new_edge_pred_set
         # appearedとnewとlostをbest methodにした時 1011
         pred_set[11] = ((t_edge_set | appeared_edge_pred_set) | new_edge_pred_set) - lost_edge_pred_set
+        pred_set[11] = delete_lost_node(pred_set[11], lost_node_pred_set)
         # appearedとdisappearedのみをbest methodにした時 1100
         pred_set[12] = (t_edge_set | appeared_edge_pred_set) - disappeared_edge_pred_set
         # appearedとdisappearedとlostのみをbest methodにした時 1101
         pred_set[13] = ((t_edge_set | appeared_edge_pred_set) - disappeared_edge_pred_set) - lost_edge_pred_set
+        pred_set[13] = delete_lost_node(pred_set[13], lost_node_pred_set)
         # appearedとdisappearedとnewのみをbest methodにした時 1110
         pred_set[14] = ((t_edge_set | appeared_edge_pred_set) | new_edge_pred_set) - disappeared_edge_pred_set
         # appearedとdisappearedとnewとlostをbest methodにした時 1111
         pred_set[15] = (((t_edge_set | appeared_edge_pred_set) | new_edge_pred_set) - disappeared_edge_pred_set) - lost_edge_pred_set
+        pred_set[15] = delete_lost_node(pred_set[15], lost_node_pred_set)
 
         n_true += len(true_set)
         true_set_list.append(true_set)
