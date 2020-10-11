@@ -25,11 +25,12 @@ from setting_param import Evaluation_node_prediction_lost_Baseline_InputDir as B
 from setting_param import Evaluation_node_prediction_lost_Random_InputDir as Random_InputDir
 from setting_param import Evaluation_node_prediction_lost_LSTM_InputDir as LSTM_InputDir
 from setting_param import Evaluation_node_prediction_lost_STGGNN_InputDir as STGGNN_InputDir
+from setting_param import Evaluation_node_prediction_lost_EGCNh_InputDir as EGCNh_InputDir
 
 from setting_param import Evaluation_node_prediction_lost_OutputDir as OutputDir
 
-InputDirs = [Baseline_InputDir, Random_InputDir, LSTM_InputDir, STGGNN_InputDir]
-methods = ['Baseline', 'Random', 'LSTM', 'STGGNN']
+InputDirs = [Baseline_InputDir, Random_InputDir, LSTM_InputDir, STGGNN_InputDir, EGCNh_InputDir]
+methods = ['Baseline', 'Random', 'LSTM', 'STGGNN', 'EGCNh']
 os.makedirs(OutputDir, exist_ok=True)
 os.makedirs(OutputDir + '/train', exist_ok=True)
 os.makedirs(OutputDir + '/valid', exist_ok=True)
@@ -122,6 +123,7 @@ def get_performance(InputDir, method, is_train, is_valid, is_test):
     (fpr, tpr, thresholds_roc), auc, (precision, recall, thresholds_pr), ap = calc_roc_pr(true_paths, pred_paths, mask_paths, target_idx)
     return fpr, tpr, thresholds_roc, auc, precision, recall, thresholds_pr, ap
 
+
 # Loss
 for idx, method in enumerate(methods):
     if method == 'Baseline' or method == 'Random':
@@ -193,3 +195,73 @@ for idx, method in enumerate(methods):
     plt.ylabel('Precision')
     plt.title('ap = ' + str(ap))
     plt.savefig(OutputDir + '/test/precision_recall_curve_' + method + '.pdf')
+
+# ROCとPRを重ねて表示
+
+plt.figure()
+for idx, method in enumerate(methods):
+    InputDir = InputDirs[idx]
+    fpr, tpr, thresholds_roc, auc, precision, recall, thresholds_pr, ap = get_performance(InputDir, method, True, False, False)
+    plt.plot(fpr, tpr, label=method + "(auc:" + str(round(auc,3)) + ")")
+plt.xlabel('FPR: False positive rate')
+plt.ylabel('TPR: True positive rate')
+plt.legend()
+plt.title('Comparing ROC Curves')
+plt.savefig(OutputDir + '/train/roc_curve.pdf')
+
+plt.figure()
+for idx, method in enumerate(methods):
+    InputDir = InputDirs[idx]
+    fpr, tpr, thresholds_roc, auc, precision, recall, thresholds_pr, ap = get_performance(InputDir, method, True, False, False)
+    plt.plot(recall, precision, label=method + "(ap:" + str(round(ap,3)) + ")")
+plt.xlabel('Recall')
+plt.ylabel('Precision')
+plt.legend()
+plt.title('Comparing PR Curves')
+plt.savefig(OutputDir + '/train/pr_curve.pdf')
+
+
+plt.figure()
+for idx, method in enumerate(methods):
+    InputDir = InputDirs[idx]
+    fpr, tpr, thresholds_roc, auc, precision, recall, thresholds_pr, ap = get_performance(InputDir, method, False, True, False)
+    plt.plot(fpr, tpr, label=method + "(auc:" + str(round(auc,3)) + ")")
+plt.xlabel('FPR: False positive rate')
+plt.ylabel('TPR: True positive rate')
+plt.legend()
+plt.title('Comparing ROC Curves')
+plt.savefig(OutputDir + '/valid/roc_curve.pdf')
+
+plt.figure()
+for idx, method in enumerate(methods):
+    InputDir = InputDirs[idx]
+    fpr, tpr, thresholds_roc, auc, precision, recall, thresholds_pr, ap = get_performance(InputDir, method, False, True, False)
+    plt.plot(recall, precision, label=method + "(ap:" + str(round(ap,3)) + ")")
+plt.xlabel('Recall')
+plt.ylabel('Precision')
+plt.legend()
+plt.title('Comparing PR Curves')
+plt.savefig(OutputDir + '/valid/pr_curve.pdf')
+
+
+plt.figure()
+for idx, method in enumerate(methods):
+    InputDir = InputDirs[idx]
+    fpr, tpr, thresholds_roc, auc, precision, recall, thresholds_pr, ap = get_performance(InputDir, method, False, False, True)
+    plt.plot(fpr, tpr, label=method + "(auc:" + str(round(auc,3)) + ")")
+plt.xlabel('FPR: False positive rate')
+plt.ylabel('TPR: True positive rate')
+plt.legend()
+plt.title('Comparing ROC Curves')
+plt.savefig(OutputDir + '/test/roc_curve.pdf')
+
+plt.figure()
+for idx, method in enumerate(methods):
+    InputDir = InputDirs[idx]
+    fpr, tpr, thresholds_roc, auc, precision, recall, thresholds_pr, ap = get_performance(InputDir, method, False, False, True)
+    plt.plot(recall, precision, label=method + "(ap:" + str(round(ap,3)) + ")")
+plt.xlabel('Recall')
+plt.ylabel('Precision')
+plt.legend()
+plt.title('Comparing PR Curves')
+plt.savefig(OutputDir + '/test/pr_curve.pdf')

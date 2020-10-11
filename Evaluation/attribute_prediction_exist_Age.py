@@ -27,11 +27,12 @@ from setting_param import attribute_prediction_exist_Age_std as a_std
 from setting_param import Evaluation_attribute_prediction_exist_Age_Baseline_InputDir as Baseline_InputDir
 from setting_param import Evaluation_attribute_prediction_exist_Age_LSTM_InputDir as LSTM_InputDir
 from setting_param import Evaluation_attribute_prediction_exist_Age_STGGNN_InputDir as STGGNN_InputDir
+from setting_param import Evaluation_attribute_prediction_exist_Age_EGCNh_InputDir as EGCNh_InputDir
 
 from setting_param import Evaluation_attribute_prediction_exist_Age_OutputDir as OutputDir
 
-InputDirs = [Baseline_InputDir, LSTM_InputDir, STGGNN_InputDir]
-methods = ['Baseline', 'LSTM', 'STGGNN']
+InputDirs = [Baseline_InputDir, LSTM_InputDir, STGGNN_InputDir, EGCNh_InputDir]
+methods = ['Baseline', 'LSTM', 'STGGNN', 'EGCNh']
 os.makedirs(OutputDir, exist_ok=True)
 
 def load_paths_from_dir(dir_path):
