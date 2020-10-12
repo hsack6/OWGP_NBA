@@ -26,11 +26,12 @@ from setting_param import Evaluation_node_prediction_lost_Random_InputDir as Ran
 from setting_param import Evaluation_node_prediction_lost_LSTM_InputDir as LSTM_InputDir
 from setting_param import Evaluation_node_prediction_lost_STGGNN_InputDir as STGGNN_InputDir
 from setting_param import Evaluation_node_prediction_lost_EGCNh_InputDir as EGCNh_InputDir
+from setting_param import Evaluation_node_prediction_lost_STGCN_InputDir as STGCN_InputDir
 
 from setting_param import Evaluation_node_prediction_lost_OutputDir as OutputDir
 
-InputDirs = [Baseline_InputDir, Random_InputDir, LSTM_InputDir, STGGNN_InputDir, EGCNh_InputDir]
-methods = ['Baseline', 'Random', 'LSTM', 'STGGNN', 'EGCNh']
+InputDirs = [Baseline_InputDir, Random_InputDir, LSTM_InputDir, STGGNN_InputDir, EGCNh_InputDir, STGCN_InputDir]
+methods = ['Baseline', 'Random', 'LSTM', 'STGGNN', 'EGCNh', 'STGCN']
 os.makedirs(OutputDir, exist_ok=True)
 os.makedirs(OutputDir + '/train', exist_ok=True)
 os.makedirs(OutputDir + '/valid', exist_ok=True)

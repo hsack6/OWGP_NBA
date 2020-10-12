@@ -28,11 +28,12 @@ from setting_param import Evaluation_attribute_prediction_exist_Tm_Baseline_Inpu
 from setting_param import Evaluation_attribute_prediction_exist_Tm_LSTM_InputDir as LSTM_InputDir
 from setting_param import Evaluation_attribute_prediction_exist_Tm_STGGNN_InputDir as STGGNN_InputDir
 from setting_param import Evaluation_attribute_prediction_exist_Tm_EGCNh_InputDir as EGCNh_InputDir
+from setting_param import Evaluation_attribute_prediction_exist_Tm_STGCN_InputDir as STGCN_InputDir
 
 from setting_param import Evaluation_attribute_prediction_exist_Tm_OutputDir as OutputDir
 
-InputDirs = [Baseline_InputDir, LSTM_InputDir, STGGNN_InputDir, EGCNh_InputDir]
-methods = ['Baseline', 'LSTM', 'STGGNN', 'EGCNh']
+InputDirs = [Baseline_InputDir, LSTM_InputDir, STGGNN_InputDir, EGCNh_InputDir, STGCN_InputDir]
+methods = ['Baseline', 'LSTM', 'STGGNN', 'EGCNh', 'STGCN']
 os.makedirs(OutputDir, exist_ok=True)
 os.makedirs(OutputDir + '/train', exist_ok=True)
 os.makedirs(OutputDir + '/valid', exist_ok=True)
