@@ -10,8 +10,10 @@ class COSSIMMLP(nn.Module):
         self.state_dim = opt.state_dim
         self.n_node = opt.n_node
 
+        self.mlp = nn.Linear(self.state_dim, self.state_dim)
+
         self.out = nn.Sequential(
-            #nn.Linear(self.n_node, self.n_node),
+            nn.Linear(self.n_node, self.n_node),
             nn.Sigmoid()
         )
 
@@ -41,6 +43,7 @@ class COSSIMMLP(nn.Module):
         output     :(batch_size, n_node, output_dim)
         """
         output = prop_state[:, :, -1]  # (batch_size, n_node, state_dim)
+        output = self.mlp(output)
         output_batch = []
         for batch in range(self.batchSize):
             output_batch.append(self.sim_matrix(output[batch], output[batch])) # (n_node, n_node)

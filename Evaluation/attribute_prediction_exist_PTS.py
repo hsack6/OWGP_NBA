@@ -29,11 +29,13 @@ from setting_param import Evaluation_attribute_prediction_exist_PTS_LSTM_InputDi
 from setting_param import Evaluation_attribute_prediction_exist_PTS_STGGNN_InputDir as STGGNN_InputDir
 from setting_param import Evaluation_attribute_prediction_exist_PTS_EGCNh_InputDir as EGCNh_InputDir
 from setting_param import Evaluation_attribute_prediction_exist_PTS_STGCN_InputDir as STGCN_InputDir
+from setting_param import Evaluation_attribute_prediction_exist_PTS_EGCNo_InputDir as EGCNo_InputDir
+from setting_param import Evaluation_attribute_prediction_exist_PTS_GCN_InputDir as GCN_InputDir
 
 from setting_param import Evaluation_attribute_prediction_exist_PTS_OutputDir as OutputDir
 
-InputDirs = [Baseline_InputDir, LSTM_InputDir, STGGNN_InputDir, EGCNh_InputDir, STGCN_InputDir]
-methods = ['Baseline', 'LSTM', 'STGGNN', 'EGCNh', 'STGCN']
+InputDirs = [Baseline_InputDir, LSTM_InputDir, GCN_InputDir, STGCN_InputDir, EGCNh_InputDir, EGCNo_InputDir, STGGNN_InputDir]
+methods = ['Baseline', 'LSTM', 'GCN', 'STGCN', 'EvolveGCN-H', 'EvolveGCN-O', 'TGGNN']
 os.makedirs(OutputDir, exist_ok=True)
 
 def load_paths_from_dir(dir_path):

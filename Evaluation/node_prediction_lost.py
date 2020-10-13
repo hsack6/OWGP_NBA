@@ -27,11 +27,13 @@ from setting_param import Evaluation_node_prediction_lost_LSTM_InputDir as LSTM_
 from setting_param import Evaluation_node_prediction_lost_STGGNN_InputDir as STGGNN_InputDir
 from setting_param import Evaluation_node_prediction_lost_EGCNh_InputDir as EGCNh_InputDir
 from setting_param import Evaluation_node_prediction_lost_STGCN_InputDir as STGCN_InputDir
+from setting_param import Evaluation_node_prediction_lost_EGCNo_InputDir as EGCNo_InputDir
+from setting_param import Evaluation_node_prediction_lost_GCN_InputDir as GCN_InputDir
 
 from setting_param import Evaluation_node_prediction_lost_OutputDir as OutputDir
 
-InputDirs = [Baseline_InputDir, Random_InputDir, LSTM_InputDir, STGGNN_InputDir, EGCNh_InputDir, STGCN_InputDir]
-methods = ['Baseline', 'Random', 'LSTM', 'STGGNN', 'EGCNh', 'STGCN']
+InputDirs = [Baseline_InputDir, Random_InputDir, LSTM_InputDir, GCN_InputDir, STGCN_InputDir, EGCNh_InputDir, EGCNo_InputDir, STGGNN_InputDir]
+methods = ['Baseline', 'Random', 'LSTM', 'GCN', 'STGCN', 'EvolveGCN-H', 'EvolveGCN-O', 'TGGNN']
 os.makedirs(OutputDir, exist_ok=True)
 os.makedirs(OutputDir + '/train', exist_ok=True)
 os.makedirs(OutputDir + '/valid', exist_ok=True)

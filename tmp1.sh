@@ -1,0 +1,9 @@
+cd /Users/shohei/work/NBA/Evaluation
+python node_prediction_lost.py
+python attribute_prediction_exist_Age.py
+python attribute_prediction_exist_Pos.py
+python attribute_prediction_exist_PTS.py
+python attribute_prediction_exist_Tm.py
+python attribute_prediction_exist_Tm_binary.py
+python link_prediction_appeared.py
+python link_prediction_disappeared.py

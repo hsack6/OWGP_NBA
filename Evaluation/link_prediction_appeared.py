@@ -27,11 +27,13 @@ from setting_param import Evaluation_link_prediction_appeared_COSSIMMLP_InputDir
 from setting_param import Evaluation_link_prediction_appeared_STGGNN_InputDir as STGGNN_InputDir
 from setting_param import Evaluation_link_prediction_appeared_EGCNh_InputDir as EGCNh_InputDir
 from setting_param import Evaluation_link_prediction_appeared_STGCN_InputDir as STGCN_InputDir
+from setting_param import Evaluation_link_prediction_appeared_EGCNo_InputDir as EGCNo_InputDir
+from setting_param import Evaluation_link_prediction_appeared_GCN_InputDir as GCN_InputDir
 
 from setting_param import Evaluation_link_prediction_appeared_OutputDir as OutputDir
 
-InputDirs = [Baseline_InputDir, Random_InputDir, COSSIMMLP_InputDir, STGGNN_InputDir, EGCNh_InputDir, STGCN_InputDir]
-methods = ['Baseline', 'Random', 'COSSIMMLP', 'STGGNN', 'EGCNh', 'STGCN']
+InputDirs = [Baseline_InputDir, Random_InputDir, COSSIMMLP_InputDir, GCN_InputDir, STGCN_InputDir, EGCNh_InputDir, EGCNo_InputDir, STGGNN_InputDir]
+methods = ['Baseline', 'Random', 'FNN', 'GCN', 'STGCN', 'EvolveGCN-H', 'EvolveGCN-O', 'TGGNN']
 os.makedirs(OutputDir, exist_ok=True)
 os.makedirs(OutputDir + '/train', exist_ok=True)
 os.makedirs(OutputDir + '/valid', exist_ok=True)
