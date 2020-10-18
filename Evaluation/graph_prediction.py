@@ -502,4 +502,4 @@ def link_prediction(n_appeared, p_appeared, n_disappeared, p_disappeared, n_new,
 
 
 # link_prediction(n_appeared, p_appeared, n_disappeared, p_disappeared,  n_new,                    p_new, n_lost,  p_lost)
-link_prediction(      "LSTM",   "STGGNN",        "LSTM",      "repeat0", "LSTM", "COSSIMMLP_Baseline_mix", "LSTM", "STGGNN")
+link_prediction(      "LSTM",      "GCN",        "LSTM",      "repeat0", "LSTM", "COSSIMMLP_Baseline_mix", "LSTM", "STGGNN")
