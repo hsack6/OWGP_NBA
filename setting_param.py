@@ -78,6 +78,7 @@ Model_prediction_num_of_node_lost_LSTM_OutputDir = ROOT_PATH + "/data/learning_r
 
 # link_prediction_appeared
 Model_link_prediction_appeared_InputDir = MakeSample_link_prediction_appeared_OutputDir
+Model_link_prediction_appeared_DynGEM_InputDir = MakeSample_link_prediction_appeared_DynGEM_OutputDir
 Model_link_prediction_appeared_Baseline_OutputDir = ROOT_PATH + "/data/learning_result/link_prediction_appeared/Baseline"
 Model_link_prediction_appeared_Random_OutputDir = ROOT_PATH + "/data/learning_result/link_prediction_appeared/Random"
 Model_link_prediction_appeared_COSSIMMLP_OutputDir = ROOT_PATH + "/data/learning_result/link_prediction_appeared/COSSIMMLP"
@@ -86,9 +87,12 @@ Model_link_prediction_appeared_EGCNh_OutputDir = ROOT_PATH + "/data/learning_res
 Model_link_prediction_appeared_STGCN_OutputDir = ROOT_PATH + "/data/learning_result/link_prediction_appeared/STGCN"
 Model_link_prediction_appeared_EGCNo_OutputDir = ROOT_PATH + "/data/learning_result/link_prediction_appeared/EGCNo"
 Model_link_prediction_appeared_GCN_OutputDir = ROOT_PATH + "/data/learning_result/link_prediction_appeared/GCN"
+Model_link_prediction_appeared_DynGEM_OutputDir = ROOT_PATH + "/data/learning_result/link_prediction_appeared/DynGEM"
+Model_link_prediction_appeared_LSTM_OutputDir = ROOT_PATH + "/data/learning_result/link_prediction_appeared/LSTM"
 
 # link_prediction_disappeared
 Model_link_prediction_disappeared_InputDir = MakeSample_link_prediction_disappeared_OutputDir
+Model_link_prediction_disappeared_DynGEM_InputDir = MakeSample_link_prediction_disappeared_DynGEM_OutputDir
 Model_link_prediction_disappeared_Baseline_OutputDir = ROOT_PATH + "/data/learning_result/link_prediction_disappeared/Baseline"
 Model_link_prediction_disappeared_Random_OutputDir = ROOT_PATH + "/data/learning_result/link_prediction_disappeared/Random"
 Model_link_prediction_disappeared_COSSIMMLP_OutputDir = ROOT_PATH + "/data/learning_result/link_prediction_disappeared/COSSIMMLP"
@@ -97,9 +101,12 @@ Model_link_prediction_disappeared_EGCNh_OutputDir = ROOT_PATH + "/data/learning_
 Model_link_prediction_disappeared_STGCN_OutputDir = ROOT_PATH + "/data/learning_result/link_prediction_disappeared/STGCN"
 Model_link_prediction_disappeared_EGCNo_OutputDir = ROOT_PATH + "/data/learning_result/link_prediction_disappeared/EGCNo"
 Model_link_prediction_disappeared_GCN_OutputDir = ROOT_PATH + "/data/learning_result/link_prediction_disappeared/GCN"
+Model_link_prediction_disappeared_DynGEM_OutputDir = ROOT_PATH + "/data/learning_result/link_prediction_disappeared/DynGEM"
+Model_link_prediction_disappeared_LSTM_OutputDir = ROOT_PATH + "/data/learning_result/link_prediction_disappeared/LSTM"
 
 # node_prediction_lost
 Model_node_prediction_lost_InputDir = MakeSample_node_prediction_lost_OutputDir
+Model_node_prediction_lost_DynGEM_InputDir = MakeSample_node_prediction_lost_DynGEM_OutputDir
 Model_node_prediction_lost_Baseline_OutputDir = ROOT_PATH + "/data/learning_result/node_prediction_lost/Baseline"
 Model_node_prediction_lost_Random_OutputDir = ROOT_PATH + "/data/learning_result/node_prediction_lost/Random"
 Model_node_prediction_lost_LSTM_OutputDir = ROOT_PATH + "/data/learning_result/node_prediction_lost/LSTM"
@@ -108,6 +115,8 @@ Model_node_prediction_lost_EGCNh_OutputDir = ROOT_PATH + "/data/learning_result/
 Model_node_prediction_lost_STGCN_OutputDir = ROOT_PATH + "/data/learning_result/node_prediction_lost/STGCN"
 Model_node_prediction_lost_EGCNo_OutputDir = ROOT_PATH + "/data/learning_result/node_prediction_lost/EGCNo"
 Model_node_prediction_lost_GCN_OutputDir = ROOT_PATH + "/data/learning_result/node_prediction_lost/GCN"
+Model_node_prediction_lost_DynGEM_OutputDir = ROOT_PATH + "/data/learning_result/node_prediction_lost/DynGEM"
+Model_node_prediction_lost_FNN_OutputDir = ROOT_PATH + "/data/learning_result/node_prediction_lost/FNN"
 
 # attribute_prediction_exist
 Model_attribute_prediction_exist_PTS_InputDir = MakeSample_attribute_prediction_exist_PTS_OutputDir
@@ -221,6 +230,8 @@ Evaluation_link_prediction_appeared_EGCNh_InputDir = Model_link_prediction_appea
 Evaluation_link_prediction_appeared_STGCN_InputDir = Model_link_prediction_appeared_STGCN_OutputDir
 Evaluation_link_prediction_appeared_EGCNo_InputDir = Model_link_prediction_appeared_EGCNo_OutputDir
 Evaluation_link_prediction_appeared_GCN_InputDir = Model_link_prediction_appeared_GCN_OutputDir
+Evaluation_link_prediction_appeared_DynGEM_InputDir = Model_link_prediction_appeared_DynGEM_OutputDir
+Evaluation_link_prediction_appeared_LSTM_InputDir = Model_link_prediction_appeared_LSTM_OutputDir
 Evaluation_link_prediction_appeared_OutputDir = ROOT_PATH + "/data/result/link_prediction_appeared"
 
 # link_prediction_disappeared
@@ -232,6 +243,8 @@ Evaluation_link_prediction_disappeared_EGCNh_InputDir = Model_link_prediction_di
 Evaluation_link_prediction_disappeared_STGCN_InputDir = Model_link_prediction_disappeared_STGCN_OutputDir
 Evaluation_link_prediction_disappeared_EGCNo_InputDir = Model_link_prediction_disappeared_EGCNo_OutputDir
 Evaluation_link_prediction_disappeared_GCN_InputDir = Model_link_prediction_disappeared_GCN_OutputDir
+Evaluation_link_prediction_disappeared_DynGEM_InputDir = Model_link_prediction_disappeared_DynGEM_OutputDir
+Evaluation_link_prediction_disappeared_LSTM_InputDir = Model_link_prediction_disappeared_LSTM_OutputDir
 Evaluation_link_prediction_disappeared_OutputDir = ROOT_PATH + "/data/result/link_prediction_disappeared"
 
 # node_prediction_lost
@@ -243,6 +256,8 @@ Evaluation_node_prediction_lost_EGCNh_InputDir = Model_node_prediction_lost_EGCN
 Evaluation_node_prediction_lost_STGCN_InputDir = Model_node_prediction_lost_STGCN_OutputDir
 Evaluation_node_prediction_lost_EGCNo_InputDir = Model_node_prediction_lost_EGCNo_OutputDir
 Evaluation_node_prediction_lost_GCN_InputDir = Model_node_prediction_lost_GCN_OutputDir
+Evaluation_node_prediction_lost_DynGEM_InputDir = Model_node_prediction_lost_DynGEM_OutputDir
+Evaluation_node_prediction_lost_FNN_InputDir = Model_node_prediction_lost_FNN_OutputDir
 Evaluation_node_prediction_lost_OutputDir = ROOT_PATH + "/data/result/node_prediction_lost"
 
 # attribute_prediction_exist
