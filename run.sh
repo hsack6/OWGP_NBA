@@ -62,6 +62,8 @@ WORK_PATH=$(pwd)
 #python node_prediction_lost.py
 #cd $WORK_PATH/MakeSample/DynGEM
 #python main.py
+cd $WORK_PATH/MakeSample/dyngraph2vecAE
+python main.py
 # TODO: このスクリプトにはexisting_nodesの属性予測が書かれていないので実験する際は追加する
 #============================================= 6 =============================================
 # node_prediction_lost学習
@@ -83,10 +85,10 @@ WORK_PATH=$(pwd)
 #python main.py
 #cd $WORK_PATH/Model/node_prediction_lost/DynGEM
 #python main.py
-cd $WORK_PATH/Model/node_prediction_lost/FNN
-python main.py
-cd $WORK_PATH/Evaluation
-python node_prediction_lost.py
+#cd $WORK_PATH/Model/node_prediction_lost/FNN
+#python main.py
+#cd $WORK_PATH/Evaluation
+#python node_prediction_lost.py
 
 #link_prediction_new学習&評価
 #cd $WORK_PATH/Model/link_prediction_new/COSSIMMLP
@@ -145,9 +147,9 @@ python node_prediction_lost.py
 #python main.py
 #cd $WORK_PATH/Model/link_prediction_disappeared/DynGEM
 #python main.py
-cd $WORK_PATH/Model/link_prediction_disappeared/LSTM
-python main.py
-cd $WORK_PATH/Evaluation
-python link_prediction_disappeared.py
+#cd $WORK_PATH/Model/link_prediction_disappeared/LSTM
+#python main.py
+#cd $WORK_PATH/Evaluation
+#python link_prediction_disappeared.py
 
 #attribute_prediction_existの学習&評価
