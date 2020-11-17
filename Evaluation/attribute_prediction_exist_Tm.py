@@ -31,11 +31,12 @@ from setting_param import Evaluation_attribute_prediction_exist_Tm_EGCNh_InputDi
 from setting_param import Evaluation_attribute_prediction_exist_Tm_STGCN_InputDir as STGCN_InputDir
 from setting_param import Evaluation_attribute_prediction_exist_Tm_EGCNo_InputDir as EGCNo_InputDir
 from setting_param import Evaluation_attribute_prediction_exist_Tm_GCN_InputDir as GCN_InputDir
+from setting_param import Evaluation_attribute_prediction_exist_Tm_binary_transfer_InputDir as binary_trasfer_InputDir
 
 from setting_param import Evaluation_attribute_prediction_exist_Tm_OutputDir as OutputDir
 
-InputDirs = [Baseline_InputDir, LSTM_InputDir, GCN_InputDir, STGCN_InputDir, EGCNh_InputDir, EGCNo_InputDir, STGGNN_InputDir]
-methods = ['Baseline', 'LSTM', 'GCN', 'STGCN', 'EvolveGCN-H', 'EvolveGCN-O', 'TGGNN']
+InputDirs = [Baseline_InputDir, LSTM_InputDir, GCN_InputDir, STGCN_InputDir, EGCNh_InputDir, EGCNo_InputDir, STGGNN_InputDir, binary_trasfer_InputDir]
+methods = ['Baseline', 'LSTM', 'GCN', 'STGCN', 'EvolveGCN-H', 'EvolveGCN-O', 'TGGNN', 'binary + transfer']
 os.makedirs(OutputDir, exist_ok=True)
 os.makedirs(OutputDir + '/train', exist_ok=True)
 os.makedirs(OutputDir + '/valid', exist_ok=True)
@@ -95,7 +96,7 @@ def get_performance(InputDir, is_train, is_valid, is_test):
 
 # Loss
 for idx, method in enumerate(methods):
-    if method == 'Baseline':
+    if method == 'Baseline' or method == 'binary + transfer':
         continue
     InputDir = InputDirs[idx]
     loss = pd.read_csv(InputDir + '/loss.csv')

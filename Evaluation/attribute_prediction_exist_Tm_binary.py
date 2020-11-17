@@ -8,7 +8,7 @@ import re
 import os
 import sys
 import random
-from sklearn.metrics import roc_curve, roc_auc_score, precision_recall_curve, average_precision_score
+from sklearn.metrics import roc_curve, roc_auc_score, precision_recall_curve, average_precision_score, f1_score
 sns.set(style='darkgrid')
 sns.set_style(style='whitegrid')
 
@@ -106,7 +106,10 @@ def calc_roc_pr(true_paths, pred_paths, mask_paths, target_idx):
     y_pred = sum(y_pred, [])
     if sum(y_true) == 0:
         print("positiveラベルが一つもないのでaucを計算できない")
-    return roc_curve(y_true, y_pred), roc_auc_score(y_true, y_pred), precision_recall_curve(y_true, y_pred), average_precision_score(y_true, y_pred)
+    precision_, recall_, thresholds_ = precision_recall_curve(y_true, y_pred)
+    f1_ = np.array([2*precision_[i]*recall_[i] / (precision_[i]+recall_[i]) for i in range(len(precision_))])
+    f1_max_threshold = thresholds_[np.argmax(f1_)]
+    return roc_curve(y_true, y_pred), roc_auc_score(y_true, y_pred), precision_recall_curve(y_true, y_pred), average_precision_score(y_true, y_pred), f1_max_threshold
 
 def get_performance(InputDir, method, is_train, is_valid, is_test):
     true_paths, pred_paths, mask_paths = true_pred_mask_split(InputDir)
@@ -122,8 +125,8 @@ def get_performance(InputDir, method, is_train, is_valid, is_test):
     elif is_test:
         target_idx = test_idx
 
-    (fpr, tpr, thresholds_roc), auc, (precision, recall, thresholds_pr), ap = calc_roc_pr(true_paths, pred_paths, mask_paths, target_idx)
-    return fpr, tpr, thresholds_roc, auc, precision, recall, thresholds_pr, ap
+    (fpr, tpr, thresholds_roc), auc, (precision, recall, thresholds_pr), ap, f1_max_threshold = calc_roc_pr(true_paths, pred_paths, mask_paths, target_idx)
+    return fpr, tpr, thresholds_roc, auc, precision, recall, thresholds_pr, ap, f1_max_threshold
 
 # Loss
 for idx, method in enumerate(methods):
@@ -148,7 +151,7 @@ for idx, method in enumerate(methods):
 
 for idx, method in enumerate(methods):
     InputDir = InputDirs[idx]
-    fpr, tpr, thresholds_roc, auc, precision, recall, thresholds_pr, ap = get_performance(InputDir, method, True, False, False)
+    fpr, tpr, thresholds_roc, auc, precision, recall, thresholds_pr, ap, f1_max_threshold = get_performance(InputDir, method, True, False, False)
     plt.figure()
     plt.plot(fpr, tpr)
     plt.xlabel('FPR: False positive rate')
@@ -160,12 +163,12 @@ for idx, method in enumerate(methods):
     plt.plot(recall, precision)
     plt.xlabel('Recall')
     plt.ylabel('Precision')
-    plt.title('ap = ' + str(ap))
+    plt.title("(ap:" + str(round(ap,4)) + ", f1_max_threshold:" + str(round(f1_max_threshold,4)) + ")")
     plt.savefig(OutputDir + '/train/precision_recall_curve_' + method + '.pdf')
 
 for idx, method in enumerate(methods):
     InputDir = InputDirs[idx]
-    fpr, tpr, thresholds_roc, auc, precision, recall, thresholds_pr, ap = get_performance(InputDir, method, False, True, False)
+    fpr, tpr, thresholds_roc, auc, precision, recall, thresholds_pr, ap, f1_max_threshold = get_performance(InputDir, method, False, True, False)
     plt.figure()
     plt.plot(fpr, tpr)
     plt.xlabel('FPR: False positive rate')
@@ -177,12 +180,12 @@ for idx, method in enumerate(methods):
     plt.plot(recall, precision)
     plt.xlabel('Recall')
     plt.ylabel('Precision')
-    plt.title('ap = ' + str(ap))
+    plt.title("(ap:" + str(round(ap,4)) + ", f1_max_threshold:" + str(round(f1_max_threshold,4)) + ")")
     plt.savefig(OutputDir + '/valid/precision_recall_curve_' + method + '.pdf')
 
 for idx, method in enumerate(methods):
     InputDir = InputDirs[idx]
-    fpr, tpr, thresholds_roc, auc, precision, recall, thresholds_pr, ap = get_performance(InputDir, method, False, False, True)
+    fpr, tpr, thresholds_roc, auc, precision, recall, thresholds_pr, ap, f1_max_threshold = get_performance(InputDir, method, False, False, True)
     plt.figure()
     plt.plot(fpr, tpr)
     plt.xlabel('FPR: False positive rate')
@@ -194,7 +197,7 @@ for idx, method in enumerate(methods):
     plt.plot(recall, precision)
     plt.xlabel('Recall')
     plt.ylabel('Precision')
-    plt.title('ap = ' + str(ap))
+    plt.title("(ap:" + str(round(ap,4)) + ", f1_max_threshold:" + str(round(f1_max_threshold,4)) + ")")
     plt.savefig(OutputDir + '/test/precision_recall_curve_' + method + '.pdf')
 
 # ROCとPRを重ねて表示
@@ -202,8 +205,8 @@ for idx, method in enumerate(methods):
 plt.figure()
 for idx, method in enumerate(methods):
     InputDir = InputDirs[idx]
-    fpr, tpr, thresholds_roc, auc, precision, recall, thresholds_pr, ap = get_performance(InputDir, method, True, False, False)
-    plt.plot(fpr, tpr, label=method + "(auc:" + str(round(auc,3)) + ")")
+    fpr, tpr, thresholds_roc, auc, precision, recall, thresholds_pr, ap, f1_max_threshold = get_performance(InputDir, method, True, False, False)
+    plt.plot(fpr, tpr, label=method + "(auc:" + str(round(auc,4)) + ")")
 plt.xlabel('FPR: False positive rate')
 plt.ylabel('TPR: True positive rate')
 plt.legend()
@@ -213,8 +216,8 @@ plt.savefig(OutputDir + '/train/roc_curve.pdf')
 plt.figure()
 for idx, method in enumerate(methods):
     InputDir = InputDirs[idx]
-    fpr, tpr, thresholds_roc, auc, precision, recall, thresholds_pr, ap = get_performance(InputDir, method, True, False, False)
-    plt.plot(recall, precision, label=method + "(ap:" + str(round(ap,3)) + ")")
+    fpr, tpr, thresholds_roc, auc, precision, recall, thresholds_pr, ap, f1_max_threshold = get_performance(InputDir, method, True, False, False)
+    plt.plot(recall, precision, label=method + "(ap:" + str(round(ap,4)) + ", f1_max_threshold:" + str(round(f1_max_threshold,4)) + ")")
 plt.xlabel('Recall')
 plt.ylabel('Precision')
 plt.legend()
@@ -224,8 +227,8 @@ plt.savefig(OutputDir + '/train/pr_curve.pdf')
 plt.figure()
 for idx, method in enumerate(methods):
     InputDir = InputDirs[idx]
-    fpr, tpr, thresholds_roc, auc, precision, recall, thresholds_pr, ap = get_performance(InputDir, method, False, True, False)
-    plt.plot(fpr, tpr, label=method + "(auc:" + str(round(auc,3)) + ")")
+    fpr, tpr, thresholds_roc, auc, precision, recall, thresholds_pr, ap, f1_max_threshold = get_performance(InputDir, method, False, True, False)
+    plt.plot(fpr, tpr, label=method + "(auc:" + str(round(auc,4)) + ")")
 plt.xlabel('FPR: False positive rate')
 plt.ylabel('TPR: True positive rate')
 plt.legend()
@@ -235,8 +238,8 @@ plt.savefig(OutputDir + '/valid/roc_curve.pdf')
 plt.figure()
 for idx, method in enumerate(methods):
     InputDir = InputDirs[idx]
-    fpr, tpr, thresholds_roc, auc, precision, recall, thresholds_pr, ap = get_performance(InputDir, method, False, True, False)
-    plt.plot(recall, precision, label=method + "(ap:" + str(round(ap,3)) + ")")
+    fpr, tpr, thresholds_roc, auc, precision, recall, thresholds_pr, ap, f1_max_threshold = get_performance(InputDir, method, False, True, False)
+    plt.plot(recall, precision, label=method + "(ap:" + str(round(ap,4)) + ", f1_max_threshold:" + str(round(f1_max_threshold,4)) + ")")
 plt.xlabel('Recall')
 plt.ylabel('Precision')
 plt.legend()
@@ -247,8 +250,8 @@ plt.savefig(OutputDir + '/valid/pr_curve.pdf')
 plt.figure()
 for idx, method in enumerate(methods):
     InputDir = InputDirs[idx]
-    fpr, tpr, thresholds_roc, auc, precision, recall, thresholds_pr, ap = get_performance(InputDir, method, False, False, True)
-    plt.plot(fpr, tpr, label=method + "(auc:" + str(round(auc,3)) + ")")
+    fpr, tpr, thresholds_roc, auc, precision, recall, thresholds_pr, ap, f1_max_threshold = get_performance(InputDir, method, False, False, True)
+    plt.plot(fpr, tpr, label=method + "(auc:" + str(round(auc,4)) + ")")
 plt.xlabel('FPR: False positive rate')
 plt.ylabel('TPR: True positive rate')
 plt.legend()
@@ -258,8 +261,8 @@ plt.savefig(OutputDir + '/test/roc_curve.pdf')
 plt.figure()
 for idx, method in enumerate(methods):
     InputDir = InputDirs[idx]
-    fpr, tpr, thresholds_roc, auc, precision, recall, thresholds_pr, ap = get_performance(InputDir, method, False, False, True)
-    plt.plot(recall, precision, label=method + "(ap:" + str(round(ap,3)) + ")")
+    fpr, tpr, thresholds_roc, auc, precision, recall, thresholds_pr, ap, f1_max_threshold = get_performance(InputDir, method, False, False, True)
+    plt.plot(recall, precision, label=method + "(ap:" + str(round(ap,4)) + ", f1_max_threshold:" + str(round(f1_max_threshold,4)) + ")")
 plt.xlabel('Recall')
 plt.ylabel('Precision')
 plt.legend()
