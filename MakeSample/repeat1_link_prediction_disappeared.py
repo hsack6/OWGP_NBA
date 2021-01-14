@@ -32,12 +32,12 @@ from setting_param import best_methods_attribute_new_OutputDir
 from repeat_utils.get_predicted_new_attribute import get_predicted_new_attribute
 
 for c_idx, Dir in OutputDir.items():
-    os.mkdir(Dir)
-    os.mkdir(Dir + "/input/")
-    os.mkdir(Dir + "/input/node_attribute/")
-    os.mkdir(Dir + "/input/adjacency")
-    os.mkdir(Dir + "/label/")
-    os.mkdir(Dir + "/mask/")
+    os.makedirs(Dir, exist_ok=True)
+    os.makedirs(Dir + "/input/", exist_ok=True)
+    os.makedirs(Dir + "/input/node_attribute/", exist_ok=True)
+    os.makedirs(Dir + "/input/adjacency", exist_ok=True)
+    os.makedirs(Dir + "/label/", exist_ok=True)
+    os.makedirs(Dir + "/mask/", exist_ok=True)
 
 # READ EXIST_TABLE
 EXIST_TABLE = np.load(InputDir + '/exist_table.npy')
@@ -166,6 +166,7 @@ for ts in range(L, EXIST_TABLE.shape[1]-L):
     pred_Age = pred_existing_attribute_Age[ts]
     pred_PTS = pred_existing_attribute_PTS[ts]
     pred_existing_attribute[ts] = np.concatenate([pred_Tm, pred_Pos, pred_Age, pred_PTS], axis=1)
+    pred_existing_attribute[ts][sorted(set(range(all_node_num)) - GetNodes(ts_train[-1], L, 'all'))] = pred_existing_attribute[ts][sorted(set(range(all_node_num)) - GetNodes(ts_train[-1], L, 'all'))] * 0
 
 # new nodeのattributeの結果をそれぞれbest_methodのOutputDirから取得
 train_new, train_teacher, train_new_num, train_teacher_num, train_teacher_idx, train_node_pair_list = get_predicted_new_attribute(best_methods_attribute_new_OutputDir, True, False, False)
@@ -189,9 +190,7 @@ for c_idx in range(16):
         ts_train, ts_test, ts_all = TsSplit(ts, L)
         # existing nodeのattribute と new nodeのattribute を concatする
         # existing nodeのattributeの結果を取得
-        # lost_nodeのattributeがzeroになっているのでNodeAttribute(ts_train[-1])で置き換える
         pred_attribute_e = pred_existing_attribute[ts] # (3859, 35)
-        pred_attribute_e[sorted(GetNodes(ts_test, L, 'lost'))] = NodeAttribute(ts_train[-1])[sorted(GetNodes(ts_test, L, 'lost'))]
         # new node のattributeの結果を取得
         pred_attribute_n = pred_new_attribute_new[ts] # (89, 35)
         if c_idx == 0:

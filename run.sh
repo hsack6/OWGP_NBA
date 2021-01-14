@@ -63,6 +63,84 @@ WORK_PATH=$(pwd)
 #cd $WORK_PATH/MakeSample/DynGEM
 #python main.py
 # TODO: このスクリプトにはexisting_nodesの属性予測が書かれていないので実験する際は追加する
+#cd $WORK_PATH/MakeSample
+#python attribute_prediction_exist_Age.py
+#cd $WORK_PATH/Model/attribute_prediction_exist_Age/Baseline
+#python main.py
+#cd $WORK_PATH/Model/attribute_prediction_exist_Age/EGCNh
+#python main.py
+#cd $WORK_PATH/Model/attribute_prediction_exist_Age/EGCNo
+#python main.py
+#cd $WORK_PATH/Model/attribute_prediction_exist_Age/GCN
+#python main.py
+#cd $WORK_PATH/Model/attribute_prediction_exist_Age/LSTM
+#python main.py
+#cd $WORK_PATH/Model/attribute_prediction_exist_Age/STGCN
+#python main.py
+#cd $WORK_PATH/Model/attribute_prediction_exist_Age/STGGNN
+#python main.py
+#cd $WORK_PATH/Evaluation
+#python attribute_prediction_exist_Age.py
+
+#cd $WORK_PATH/MakeSample
+#python attribute_prediction_exist_Pos.py
+#cd $WORK_PATH/Model/attribute_prediction_exist_Pos/Baseline
+#python main.py
+#cd $WORK_PATH/Model/attribute_prediction_exist_Pos/EGCNh
+#python main.py
+#cd $WORK_PATH/Model/attribute_prediction_exist_Pos/EGCNo
+#python main.py
+#cd $WORK_PATH/Model/attribute_prediction_exist_Pos/GCN
+#python main.py
+#cd $WORK_PATH/Model/attribute_prediction_exist_Pos/LSTM
+#python main.py
+#cd $WORK_PATH/Model/attribute_prediction_exist_Pos/STGCN
+#python main.py
+#cd $WORK_PATH/Model/attribute_prediction_exist_Pos/STGGNN
+#python main.py
+#cd $WORK_PATH/Evaluation
+#python attribute_prediction_exist_Pos.py
+
+#cd $WORK_PATH/MakeSample
+#python attribute_prediction_exist_PTS.py
+#cd $WORK_PATH/Model/attribute_prediction_exist_PTS/Baseline
+#python main.py
+#cd $WORK_PATH/Model/attribute_prediction_exist_PTS/EGCNh
+#python main.py
+#cd $WORK_PATH/Model/attribute_prediction_exist_PTS/EGCNo
+#python main.py
+#cd $WORK_PATH/Model/attribute_prediction_exist_PTS/GCN
+#python main.py
+#cd $WORK_PATH/Model/attribute_prediction_exist_PTS/LSTM
+#python main.py
+#cd $WORK_PATH/Model/attribute_prediction_exist_PTS/STGCN
+#python main.py
+#cd $WORK_PATH/Model/attribute_prediction_exist_PTS/STGGNN
+#python main.py
+#cd $WORK_PATH/Evaluation
+#python attribute_prediction_exist_PTS.py
+
+#cd $WORK_PATH/MakeSample
+#python attribute_prediction_exist_Tm.py
+#cd $WORK_PATH/Model/attribute_prediction_exist_Tm/Baseline
+#python main.py
+#cd $WORK_PATH/Model/attribute_prediction_exist_Tm/binary_transfer
+#python main.py
+#cd $WORK_PATH/Model/attribute_prediction_exist_Tm/EGCNh
+#python main.py
+#cd $WORK_PATH/Model/attribute_prediction_exist_Tm/EGCNo
+#python main.py
+#cd $WORK_PATH/Model/attribute_prediction_exist_Tm/GCN
+#python main.py
+#cd $WORK_PATH/Model/attribute_prediction_exist_Tm/LSTM
+#python main.py
+#cd $WORK_PATH/Model/attribute_prediction_exist_Tm/STGCN
+#python main.py
+#cd $WORK_PATH/Model/attribute_prediction_exist_Tm/STGGNN
+#python main.py
+#cd $WORK_PATH/Evaluation
+#python attribute_prediction_exist_Tm.py
+
 #============================================= 6 =============================================
 # node_prediction_lost学習
 #cd $WORK_PATH/Model/node_prediction_lost/Baseline
@@ -102,8 +180,18 @@ WORK_PATH=$(pwd)
 #python main.py PROSER mix
 #python main.py PROSER learning
 #python main.py PROSER inference
-#cd $WORK_PATH/Evaluation
-#python link_prediction_new.py
+#cd $WORK_PATH/Model/link_prediction_new/DEAL
+#python main.py Baseline inference
+#python main.py FNN inference
+#python main.py DeepMatchMax inference
+#python main.py PROSER inference
+cd $WORK_PATH/Model/link_prediction_new/FNN
+python main.py Baseline inference
+python main.py FNN inference
+python main.py DeepMatchMax inference
+python main.py PROSER inference
+cd $WORK_PATH/Evaluation
+python link_prediction_new.py
 
 #link_prediction_appearedの学習&評価
 #cd $WORK_PATH/Model/link_prediction_appeared/Baseline
@@ -380,28 +468,28 @@ WORK_PATH=$(pwd)
 #python repeat1_link_prediction_appeared_utilize_new_attribute_link.py
 
 #repeat1_link_prediction_disappeared_utilize_appearedの学習&評価
-cd $WORK_PATH/Model/repeat1_link_prediction_disappeared_utilize_appeared/Baseline
-python main.py
-cd $WORK_PATH/Model/repeat1_link_prediction_disappeared_utilize_appeared/COSSIMMLP
-python main.py
-cd $WORK_PATH/Model/repeat1_link_prediction_disappeared_utilize_appeared/EGCNh
-python main.py
-cd $WORK_PATH/Model/repeat1_link_prediction_disappeared_utilize_appeared/EGCNo
-python main.py
-cd $WORK_PATH/Model/repeat1_link_prediction_disappeared_utilize_appeared/GCN
-python main.py
-cd $WORK_PATH/Model/repeat1_link_prediction_disappeared_utilize_appeared/Random
-python main.py
-cd $WORK_PATH/Model/repeat1_link_prediction_disappeared_utilize_appeared/STGCN
-python main.py
-cd $WORK_PATH/Model/repeat1_link_prediction_disappeared_utilize_appeared/STGGNN
-python main.py
-cd $WORK_PATH/Model/repeat1_link_prediction_disappeared_utilize_appeared/DynGEM
-python main.py
-cd $WORK_PATH/Model/repeat1_link_prediction_disappeared_utilize_appeared/LSTM
-python main.py
-cd $WORK_PATH/Evaluation
-python repeat1_link_prediction_disappeared_utilize_appeared.py
+#cd $WORK_PATH/Model/repeat1_link_prediction_disappeared_utilize_appeared/Baseline
+#python main.py
+#cd $WORK_PATH/Model/repeat1_link_prediction_disappeared_utilize_appeared/COSSIMMLP
+#python main.py
+#cd $WORK_PATH/Model/repeat1_link_prediction_disappeared_utilize_appeared/EGCNh
+#python main.py
+#cd $WORK_PATH/Model/repeat1_link_prediction_disappeared_utilize_appeared/EGCNo
+#python main.py
+#cd $WORK_PATH/Model/repeat1_link_prediction_disappeared_utilize_appeared/GCN
+#python main.py
+#cd $WORK_PATH/Model/repeat1_link_prediction_disappeared_utilize_appeared/Random
+#python main.py
+#cd $WORK_PATH/Model/repeat1_link_prediction_disappeared_utilize_appeared/STGCN
+#python main.py
+#cd $WORK_PATH/Model/repeat1_link_prediction_disappeared_utilize_appeared/STGGNN
+#python main.py
+#cd $WORK_PATH/Model/repeat1_link_prediction_disappeared_utilize_appeared/DynGEM
+#python main.py
+#cd $WORK_PATH/Model/repeat1_link_prediction_disappeared_utilize_appeared/LSTM
+#python main.py
+#cd $WORK_PATH/Evaluation
+#python repeat1_link_prediction_disappeared_utilize_appeared.py
 
 #repeat1_link_prediction_disappeared_utilize_existing_attributeの学習&評価
 #cd $WORK_PATH/Model/repeat1_link_prediction_disappeared_utilize_existing_attribute/Baseline
@@ -474,3 +562,4 @@ python repeat1_link_prediction_disappeared_utilize_appeared.py
 #python main.py
 #cd $WORK_PATH/Evaluation
 #python repeat1_link_prediction_disappeared_utilize_new_attribute_link.py
+

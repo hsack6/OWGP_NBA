@@ -141,6 +141,7 @@ from setting_param import n_expanded
 opt.n_node = all_node_num + n_expanded
 
 def main(opt):
+    """
     train_dataset = BADataset(opt.dataroot, opt.L, True, False, False)
     train_dataloader = BADataloader(train_dataset, batch_size=opt.batchSize, \
                                       shuffle=True, num_workers=opt.workers, drop_last=True)
@@ -152,7 +153,7 @@ def main(opt):
     test_dataset = BADataset(opt.dataroot, opt.L, False, False, True)
     test_dataloader = BADataloader(test_dataset, batch_size=opt.batchSize, \
                                      shuffle=True, num_workers=opt.workers, drop_last=True)
-
+    """
     all_dataset = BADataset(opt.dataroot, opt.L, False, False, False)
     all_dataloader = BADataloader(all_dataset, batch_size=opt.batchSize, \
                                      shuffle=False, num_workers=opt.workers, drop_last=False)
@@ -177,9 +178,12 @@ def main(opt):
     test_loss_ls = []
 
     for epoch in range(0, opt.niter):
-        train_loss = train(epoch, train_dataloader, net, criterion, optimizer, opt)
-        valid_loss = valid(valid_dataloader, net, criterion, opt)
-        test_loss = test(test_dataloader, net, criterion, opt)
+        # train_loss = train(epoch, train_dataloader, net, criterion, optimizer, opt)
+        # valid_loss = valid(valid_dataloader, net, criterion, opt)
+        # test_loss = test(test_dataloader, net, criterion, opt)
+        train_loss = 0
+        valid_loss = 0
+        test_loss = 0
 
         train_loss_ls.append(train_loss)
         valid_loss_ls.append(valid_loss)

@@ -18,6 +18,6 @@ def inference(dataloader, opt, OutputDir, Attribute_idx):
             p = output.detach().numpy()[batch]
             t = target[batch].numpy()
             m = mask[batch].numpy()
-            mmwrite(OutputDir + "/output/pred" + str(sample_idx.numpy()[batch]), lil_matrix(p * m)) # 対象要素以外をゼロにして疎行列にする
+            mmwrite(OutputDir + "/output/pred" + str(sample_idx.numpy()[batch]), lil_matrix(p))
             mmwrite(OutputDir + "/output/true" + str(sample_idx.numpy()[batch]), lil_matrix(t))
             mmwrite(OutputDir + "/output/mask" + str(sample_idx.numpy()[batch]), lil_matrix(m))
