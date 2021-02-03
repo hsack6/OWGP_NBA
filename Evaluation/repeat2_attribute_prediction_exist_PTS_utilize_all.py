@@ -36,8 +36,8 @@ from setting_param import Evaluation_repeat2_attribute_prediction_exist_PTS_util
 
 # InputDirs = [Baseline_InputDir, LSTM_InputDir, GCN_InputDir, STGCN_InputDir, EGCNh_InputDir, EGCNo_InputDir, STGGNN_InputDir]
 # methods = ['Baseline', 'LSTM', 'GCN', 'STGCN', 'EvolveGCN-H', 'EvolveGCN-O', 'TGGNN']
-InputDirs = [STGGNN_InputDir]
-methods = ['TGGNN']
+InputDirs = [LSTM_InputDir]
+methods = ['LSTM']
 os.makedirs(OutputDir, exist_ok=True)
 
 def load_paths_from_dir(dir_path):
